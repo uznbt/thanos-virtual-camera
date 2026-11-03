@@ -9,5 +9,5 @@ contextBridge.exposeInMainWorld('vcam', {
   captureBackground: () => ipcRenderer.invoke('api-request', 'POST', '/bg'),
   resetBackground: () => ipcRenderer.invoke('api-request', 'POST', '/resetbg'),
   setThreshold: (value) => ipcRenderer.invoke('api-request', 'POST', '/threshold', { value }),
-  frame: () => ipcRenderer.invoke('api-request', 'GET', '/frame.jpg'),
+  frame: () => ipcRenderer.invoke('api-request', 'GET', '/frame.png'),
 });

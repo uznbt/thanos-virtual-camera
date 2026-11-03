@@ -35,7 +35,7 @@ async function refreshStatus() {
 async function refreshFrame() {
   const response = await window.vcam.frame();
   if (response?.ok && response.bytes) {
-    preview.src = `data:image/jpeg;base64,${response.bytes}`;
+    preview.src = `data:image/png;base64,${response.bytes}`;
   }
 }
 

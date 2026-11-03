@@ -13,15 +13,16 @@
     "url": "git+https://github.com/uznbt/thanos-virtual-camera.git"
   },
   "license": "GPL-3.0-or-later",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "src/main.mjs",
   "type": "module",
   "scripts": {
     "start": "electron .",
+    "build:native": "node scripts/build-native.mjs",
     "build:python": "node scripts/build-python.mjs",
-    "pack": "npm run build:python && electron-builder --dir",
-    "dist": "npm run build:python && electron-builder",
-    "release": "npm run build:python && electron-builder --publish always"
+    "pack": "npm run build:native && electron-builder --dir",
+    "dist": "npm run build:native && electron-builder",
+    "release": "npm run build:native && electron-builder --publish always"
   },
   "devDependencies": {
     "electron": "^40.10.5",

@@ -8,8 +8,8 @@ files:
   - package.json
 
 extraResources:
-  - from: "dist/python/"
-    to: "python/"
+  - from: "dist/native/"
+    to: "native/"
     filter:
       - "**/*"
 
@@ -48,4 +48,5 @@ linux:
       Categories: Utility;AudioVideo;Video;
 
 publish:
-  - github
+  - provider: github
+    releaseType: release

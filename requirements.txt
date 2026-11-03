@@ -1,6 +1,0 @@
-opencv-python-headless>=4.10
-mediapipe>=1.2
-numpy>=2.0
-pyvirtualcam>=0.12
-flask>=3.0
-requests>=2.0

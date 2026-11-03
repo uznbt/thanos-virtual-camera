@@ -17,3 +17,6 @@ snapshots/
 .venv-build/
 thanos-virtual-camera.spec
 build/thanos-virtual-camera/
+
+vendor/onnxruntime/
+build/native/

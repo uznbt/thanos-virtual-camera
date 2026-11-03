@@ -18,19 +18,15 @@ let windowRef = null;
 function backendCommand() {
   if (app.isPackaged) {
     return {
-      executable: path.join(process.resourcesPath, 'python', isWindows ? 'thanos-virtual-camera.exe' : 'thanos-virtual-camera'),
-      args: [],
+      executable: path.join(process.resourcesPath, 'native', isWindows ? 'native-camera.exe' : 'native-camera'),
+      model: path.join(process.resourcesPath, 'native', 'u2netp.onnx'),
     };
   }
-  const localVenv = isWindows
-    ? path.join(root, '.venv', 'Scripts', 'python.exe')
-    : path.join(root, '.venv', 'bin', 'python');
-  const buildVenv = isWindows
-    ? path.join(root, '.venv-build', 'Scripts', 'python.exe')
-    : path.join(root, '.venv-build', 'bin', 'python');
   return {
-    executable: fs.existsSync(localVenv) ? localVenv : buildVenv,
-    args: ['camera_virtual.py'],
+    executable: isWindows
+      ? path.join(root, 'build', 'native', 'Release', 'native-camera.exe')
+      : path.join(root, 'build', 'native', 'native-camera'),
+    model: path.join(root, 'models', 'u2netp.onnx'),
   };
 }
 
@@ -40,8 +36,7 @@ function backendExecutable() {
 
 function backendArgs() {
   const dst = process.env.THANOS_CAMERA_DST || (isWindows ? 'OBS Virtual Camera' : '/dev/video10');
-  const common = ['--no-preview', '--dst', dst];
-  return [...backendCommand().args, ...common];
+  return ['--dst', dst, '--no-preview'];
 }
 
 function ensureLinuxLoopback() {
@@ -52,7 +47,8 @@ function ensureLinuxLoopback() {
 function startBackend() {
   if (backend && !backend.killed) return backend;
   ensureLinuxLoopback();
-  const executable = backendExecutable();
+  const command = backendCommand();
+  const executable = command.executable;
   const logDir = path.join(app.getPath('userData'), 'logs');
   fs.mkdirSync(logDir, { recursive: true });
   const logPath = path.join(logDir, 'backend.log');
@@ -63,7 +59,7 @@ function startBackend() {
   const out = fs.openSync(logPath, 'a');
   backend = spawn(executable, backendArgs(), {
     cwd: root,
-    env: { ...process.env, THANOS_CAMERA_HOME: app.getPath('userData') },
+    env: { ...process.env, THANOS_CAMERA_HOME: app.getPath('userData'), THANOS_MODEL: command.model },
     stdio: ['ignore', out, out],
     windowsHide: true,
   });
