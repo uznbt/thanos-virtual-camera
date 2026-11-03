@@ -1,0 +1,34 @@
+{
+  "name": "thanos-virtual-camera",
+  "productName": "Thanos Virtual Camera",
+  "desktopName": "thanos-virtual-camera",
+  "description": "Virtual camera that removes people with a Thanos-style snap effect",
+  "author": {
+    "name": "uznbt",
+    "email": "uznbt@cachyos.org"
+  },
+  "homepage": "https://github.com/uznbt/thanos-virtual-camera",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uznbt/thanos-virtual-camera.git"
+  },
+  "license": "GPL-3.0-or-later",
+  "version": "0.1.0",
+  "main": "src/main.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "build:python": "node scripts/build-python.mjs",
+    "pack": "npm run build:python && electron-builder --dir",
+    "dist": "npm run build:python && electron-builder",
+    "release": "npm run build:python && electron-builder --publish always"
+  },
+  "devDependencies": {
+    "electron": "^40.10.5",
+    "electron-builder": "^26.7.0"
+  },
+  "allowScripts": {
+    "electron@40.10.6": true,
+    "electron-winstaller@5.4.0": true
+  }
+}

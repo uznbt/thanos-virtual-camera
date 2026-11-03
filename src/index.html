@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanos Virtual Camera</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">LIVE PRIVACY CAMERA</p>
+        <h1>Thanos <span>Virtual Camera</span></h1>
+        <p class="subtitle">Remove people, keep the room, and use the result in Meet, Zoom, or Teams.</p>
+      </div>
+      <div class="orb"></div>
+    </section>
+
+    <section class="workspace">
+      <div class="preview-card">
+        <img id="preview" alt="Camera preview">
+        <div id="loading" class="loading">Starting camera backend…</div>
+        <div class="preview-footer"><span id="backendDot" class="dot"></span><span id="backendText">Connecting…</span></div>
+      </div>
+
+      <aside class="controls">
+        <p class="section-title">CONTROL</p>
+        <div class="mode-grid">
+          <button data-mode="normal" class="mode active"><b>1</b><span>Normal</span><small>Pass camera through</small></button>
+          <button data-mode="remove" class="mode danger"><b>2</b><span>Remove</span><small>Thanos-style disappearance</small></button>
+          <button data-mode="virtualbg" class="mode"><b>3</b><span>Virtual BG</span><small>Keep you, replace room</small></button>
+          <button data-mode="blur" class="mode"><b>4</b><span>Blur</span><small>Keep you, blur room</small></button>
+        </div>
+
+        <div class="actions">
+          <button id="captureBg">Capture empty room</button>
+          <button id="resetBg" class="ghost">Reset captured background</button>
+        </div>
+
+        <label class="range-label" for="threshold"><span>Person detection threshold</span><output id="thresholdValue">0.50</output></label>
+        <input id="threshold" type="range" min="0.01" max="0.99" step="0.01" value="0.5">
+
+        <div class="help">
+          <p><kbd>1</kbd> normal · <kbd>2</kbd> remove · <kbd>3</kbd> virtual background · <kbd>4</kbd> blur · <kbd>B</kbd> capture background</p>
+          <p>Linux: uses <code>/dev/video10</code>. Windows: uses OBS Virtual Camera.</p>
+          <button id="github" class="link-button">Open project on GitHub ↗</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+  <script src="renderer.js"></script>
+</body>
+</html>

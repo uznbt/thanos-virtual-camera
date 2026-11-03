@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { width: 260px; font-family: system-ui, sans-serif; padding: 12px; margin: 0; }
+  h3 { margin: 0 0 8px; font-size: 14px; }
+  .row { display: flex; gap: 6px; margin: 6px 0; flex-wrap: wrap; }
+  button { flex: 1; padding: 8px 6px; border: 1px solid #ccc; border-radius: 6px; background: #f5f5f5; cursor: pointer; font-size: 12px; }
+  button:hover { background: #e0e0e0; }
+  button.active { background: #4CAF50; color: white; border-color: #4CAF50; }
+  .status { font-size: 11px; color: #555; margin-top: 8px; }
+  .sep { border-top: 1px solid #eee; margin: 8px 0; }
+  input[type=range] { width: 100%; }
+</style>
+</head>
+<body>
+  <h3>Virtual Camera</h3>
+  <div class="row">
+    <button data-mode="normal">1 Normal</button>
+    <button data-mode="remove">2 Remove</button>
+  </div>
+  <div class="row">
+    <button data-mode="virtualbg">3 VirtualBG</button>
+    <button data-mode="blur">4 Blur</button>
+  </div>
+  <div class="row">
+    <button id="bg">Capture BG</button>
+  </div>
+  <div class="row">
+    <button id="resetbg">Reset BG</button>
+  </div>
+  <div class="sep"></div>
+  <label style="font-size:11px;">Threshold: <span id="thrVal">0.50</span></label>
+  <input type="range" id="thr" min="0.01" max="0.99" step="0.01" value="0.5">
+  <div class="status" id="status">checking...</div>
+  <script src="popup.js"></script>
+</body>
+</html>

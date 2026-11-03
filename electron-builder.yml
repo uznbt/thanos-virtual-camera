@@ -1,0 +1,51 @@
+appId: "org.uznbt.thanosvirtualcamera"
+productName: "Thanos Virtual Camera"
+copyright: "Copyright © uznbt"
+
+files:
+  - src/**/*
+  - assets/**/*
+  - package.json
+
+extraResources:
+  - from: "dist/python/"
+    to: "python/"
+    filter:
+      - "**/*"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.ico
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Thanos Virtual Camera
+  runAfterFinish: true
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+
+linux:
+  syncDesktopName: true
+  category: "Utility;AudioVideo;Video"
+  icon: assets/icon.png
+  target:
+    - AppImage
+    - pacman
+    - deb
+    - rpm
+    - tar.xz
+  desktop:
+    entry:
+      Name: Thanos Virtual Camera
+      GenericName: Privacy Virtual Camera
+      Comment: Remove people from webcam output with a Thanos-style effect
+      Categories: Utility;AudioVideo;Video;
+
+publish:
+  - github
