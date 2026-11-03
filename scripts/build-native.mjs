@@ -18,11 +18,7 @@ rmSync(buildDir, { recursive: true, force: true });
 rmSync(distDir, { recursive: true, force: true });
 mkdirSync(distDir, { recursive: true });
 const cmakeArgs = ['-S', 'native', '-B', buildDir, '-DCMAKE_BUILD_TYPE=Release', `-DONNXRUNTIME_DIR=${vendor}`];
-if (isWindows) {
-  cmakeArgs.push('-G', 'Visual Studio 17 2022', '-A', 'x64');
-} else {
-  cmakeArgs.push('-G', 'Ninja');
-}
+cmakeArgs.push('-G', 'Ninja');
 run('cmake', cmakeArgs);
 run('cmake', ['--build', buildDir, '--config', 'Release', '--parallel']);
 

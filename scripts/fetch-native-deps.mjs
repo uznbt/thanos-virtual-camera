@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, cpSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
@@ -31,14 +31,7 @@ if (hash !== asset.sha256) {
   throw new Error(`ONNX Runtime checksum mismatch: got ${hash}, expected ${asset.sha256}`);
 }
 execFileSync('tar', isWindows ? ['-xf', archive, '-C', tempDir] : ['-xzf', archive, '-C', tempDir], { stdio: 'inherit' });
-const extracted = path.join(tempDir, isWindows ? `onnxruntime-win-x64-${version}` : `onnxruntime-linux-x64-${version}`);
-if (!existsSync(extracted)) throw new Error(`ONNX Runtime archive did not extract to ${extracted}`);
-const copied = ['include', 'lib', 'LICENSE', 'ThirdPartyNotices.txt', 'README.md', 'GIT_COMMIT_ID', 'Privacy.md', 'VERSION_NUMBER'];
-for (const item of copied) {
-  const source = path.join(extracted, item);
-  if (existsSync(source)) {
-    cpSync(source, path.join(vendor, item), { recursive: true });
-  }
-}
+mkdirSync(vendor, { recursive: true });
+execFileSync('tar', isWindows ? ['-xf', archive, '-C', vendor, '--strip-components=1'] : ['-xzf', archive, '-C', vendor, '--strip-components=1'], { stdio: 'inherit' });
 rmSync(tempDir, { recursive: true, force: true });
 console.log(`ONNX Runtime ${version} fetched to ${vendor}`);
